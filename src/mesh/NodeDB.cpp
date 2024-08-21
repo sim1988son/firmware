@@ -138,13 +138,22 @@ NodeDB::NodeDB()
         owner.public_key.size = config.security.public_key.size;
         memcpy(owner.public_key.bytes, config.security.public_key.bytes, config.security.public_key.size);
         crypto->setDHPrivateKey(config.security.private_key.bytes);
-    } else {
+    } else if (config.security.private_key.size == 32 &&
+               (config.security.public_key.size == 0 || memfll(config.security.public_key.bytes, 0, 32))) {
 #if !(MESHTASTIC_EXCLUDE_PKI_KEYGEN)
+        LOG_INFO("Generating new Public key\n");
+        crypto->regeneratePublicKey(config.security.public_key.bytes, config.security.private_key.bytes);
+        config.security.public_key.size = 32;
+        config.security.private_key.size = 32;
+
+        printBytes("New Pubkey", config.security.public_key.bytes, 32);
+        owner.public_key.size = 32;
+        memcpy(owner.public_key.bytes, config.security.public_key.bytes, 32);
+    } else {
         LOG_INFO("Generating new PKI keys\n");
         crypto->generateKeyPair(config.security.public_key.bytes, config.security.private_key.bytes);
         config.security.public_key.size = 32;
         config.security.private_key.size = 32;
-
         printBytes("New Pubkey", config.security.public_key.bytes, 32);
         owner.public_key.size = 32;
         memcpy(owner.public_key.bytes, config.security.public_key.bytes, 32);

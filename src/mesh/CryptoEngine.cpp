@@ -20,9 +20,31 @@
 void CryptoEngine::generateKeyPair(uint8_t *pubKey, uint8_t *privKey)
 {
     LOG_DEBUG("Generating Curve25519 key pair...\n");
-    Curve25519::dh1(public_key, private_key);
+    if (!memfll(privKey, 0, 32)) {
+        memcpy(private_key, privKey, 32);
+        Curve25519::eval(public_key, private_key, 0);
+    } else {
+        Curve25519::dh1(public_key, private_key);
+        memcpy(privKey, private_key, sizeof(private_key));
+    }
     memcpy(pubKey, public_key, sizeof(public_key));
-    memcpy(privKey, private_key, sizeof(private_key));
+}
+
+/**
+ * regenerate a public key with Curve25519.
+ *
+ * @param pubKey The destination for the public key.
+ * @param privKey The source for the private key.
+ */
+void CryptoEngine::regeneratePublicKey(uint8_t *pubKey, uint8_t *privKey)
+{
+    if (!memfll(privKey, 0, sizeof(private_key))) {
+        memcpy(private_key, privKey, sizeof(private_key));
+        Curve25519::eval(public_key, private_key, 0);
+        memcpy(pubKey, public_key, sizeof(public_key));
+    } else {
+        LOG_WARN("X25519 key generation failed due to blank private key\n");
+    }
 }
 #endif
 void CryptoEngine::clearKeys()

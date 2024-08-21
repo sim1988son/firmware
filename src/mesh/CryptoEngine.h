@@ -33,6 +33,8 @@ class CryptoEngine
 #if !(MESHTASTIC_EXCLUDE_PKI)
 #if !(MESHTASTIC_EXCLUDE_PKI_KEYGEN)
     virtual void generateKeyPair(uint8_t *pubKey, uint8_t *privKey);
+    virtual void regeneratePublicKey(uint8_t *pubKey, uint8_t *privKey);
+
 #endif
     void clearKeys();
     void setDHPrivateKey(uint8_t *_private_key);
