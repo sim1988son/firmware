@@ -1,4 +1,4 @@
-#ifndef HAS_TFT
+
 #define BUTTON_PIN 0
 #define PIN_BUTTON2 21             // Second built-in button
 #define ALT_BUTTON_PIN PIN_BUTTON2 // Send the up event
@@ -6,32 +6,46 @@
 // I2C
 #define I2C_SDA SDA
 #define I2C_SCL SCL
+// GPS
+#undef GPS_RX_PIN
+#undef GPS_TX_PIN
+#define GPS_RX_PIN 44
+#define GPS_TX_PIN 43
 
-// Display (TFT)
-#define USE_ST7789
-#define ST7789_NSS 39
+#define PIN_GPS_EN 5
+#define GPS_EN_ACTIVE 1
+#define GPS_L76K
+
+// ST7789 TFT LCD
+#define ST7789_CS 39
 #define ST7789_RS 47  // DC
 #define ST7789_SDA 48 // MOSI
 #define ST7789_SCK 38
 #define ST7789_RESET 40
 #define ST7789_MISO 4
 #define ST7789_BUSY -1
-#define VTFT_CTRL 7
-#define VTFT_LEDA 17
-#define TFT_BACKLIGHT_ON HIGH
-#define ST7789_SPI_HOST SPI2_HOST
-#define SPI_FREQUENCY 10000000
-#define SPI_READ_FREQUENCY 10000000
-#define TFT_HEIGHT 170
-#define TFT_WIDTH 320
-#define TFT_OFFSET_X 0
+#define ST7789_BL 17
+#define ST7789_SPI_HOST SPI3_HOST
+// #define TFT_BL 17
+#define SPI_FREQUENCY 40000000
+#define SPI_READ_FREQUENCY 16000000
+#define TFT_HEIGHT 320
+#define TFT_WIDTH 176
+#define TFT_OFFSET_X 35
 #define TFT_OFFSET_Y 0
-// #define TFT_OFFSET_ROTATION 0
-// #define SCREEN_ROTATE
-// #define SCREEN_TRANSITION_FRAMERATE 5
-#define BRIGHTNESS_DEFAULT 100 // Medium Low Brightnes
+#define TFT_OFFSET_ROTATION 2 //=====
 
-// #define SLEEP_TIME 120
+// #define TFT_MESH COLOR565(0x6B, 0xB2, 0x42) //4f9924
+// #define TFT_MESH COLOR565(0x4F, 0x99, 0x24)
+#define TFT_MESH_OVERRIDE COLOR565(0x4F, 0x99, 0x24)
+
+#define VTFT_CTRL 7
+
+#define SCREEN_ROTATE
+#define SCREEN_TRANSITION_FRAMERATE 15
+#define BRIGHTNESS_DEFAULT 68 // Medium Low Brightnes   
+
+#define PIN_BUZZER 4
 
 // SPI
 #define SPI_INTERFACES_COUNT 2
@@ -70,4 +84,6 @@
 
 #define SX126X_DIO2_AS_RF_SWITCH
 #define SX126X_DIO3_TCXO_VOLTAGE 1.8
-#endif // HAS_TFT
+
+#define INPUTBROKER_PEMATRIX_TYPE 1
+#define CANNED_MESSAGE_MODULE_ENABLE 1
