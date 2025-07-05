@@ -30,6 +30,10 @@
 #define INPUTBROKER_MATRIX_TYPE 0
 #endif
 
+#ifndef INPUTBROKER_PEMATRIX_TYPE
+#define INPUTBROKER_PEMATRIX_TYPE 0
+#endif
+
 #include "graphics/ScreenFonts.h"
 #include <Throttle.h>
 

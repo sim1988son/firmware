@@ -136,6 +136,16 @@ extern bool hasUnreadMessage;
 // ==============================
 // Displays a temporary centered banner message (e.g., warning, status, etc.)
 // The banner appears in the center of the screen and disappears after the specified duration
+static void drawFunctionOverlay(OLEDDisplay *display, OLEDDisplayUiState *state)
+{
+    //LOG_DEBUG("Draw function overlay11111111111111111111");
+    if (functionSymbol.begin() != functionSymbol.end()) {
+        char buf[64];
+        display->setFont(FONT_SMALL);
+        snprintf(buf, sizeof(buf), "%s", functionSymbolString.c_str());
+        display->drawString(SCREEN_WIDTH - display->getStringWidth(buf), SCREEN_HEIGHT - FONT_HEIGHT_SMALL, buf);
+    }
+}
 
 void Screen::showSimpleBanner(const char *message, uint32_t durationMs)
 {
@@ -393,7 +403,11 @@ void Screen::handleSetOn(bool on, FrameCallback einkScreensaver)
 #if !ARCH_PORTDUINO
             dispdev->displayOn();
 #endif
-
+#ifdef HELTEC_VISION_MASTER_T190_KEY //=====================
+            pinMode(VTFT_CTRL, OUTPUT);
+            digitalWrite(VTFT_CTRL, LOW);
+            static_cast<TFTDisplay *>(dispdev)->init();
+#endif
 #if defined(ST7789_CS) &&                                                                                                        \
     !defined(M5STACK) // set display brightness when turning on screens. Just moved function from TFTDisplay to here.
             static_cast<TFTDisplay *>(dispdev)->setDisplayBrightness(brightness);
@@ -1006,7 +1020,7 @@ void Screen::setFrames(FrameFocus focus)
     ui->disableAllIndicators();
 
     // Add overlays: frame icons and alert banner)
-    static OverlayCallback overlays[] = {graphics::UIRenderer::drawNavigationBar, NotificationRenderer::drawBannercallback};
+    static OverlayCallback overlays[] = {graphics::UIRenderer::drawNavigationBar, NotificationRenderer::drawBannercallback, drawFunctionOverlay};
     ui->setOverlays(overlays, sizeof(overlays) / sizeof(overlays[0]));
 
     prevFrame = -1; // Force drawNodeInfo to pick a new node (because our list

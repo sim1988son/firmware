@@ -30,6 +30,10 @@ enum input_broker_event {
 #define INPUT_BROKER_MSG_BLUETOOTH_TOGGLE 0xAA
 #define INPUT_BROKER_MSG_TAB 0x09
 #define INPUT_BROKER_MSG_EMOTE_LIST 0x8F
+#define INPUT_BROKER_MSG_SYS_ON_SYMBOL_OFF 0xf3
+#define INPUT_BROKER_MSG_SYS_OFF_abc_SYMBOL_ON 0xf4
+#define INPUT_BROKER_MSG_SYS_OFF_ABC_SYMBOL_ON 0xf5
+#define INPUT_BROKER_MSG_SYS_OFF_123_SYMBOL_ON 0xf6
 
 typedef struct _InputEvent {
     const char *source;

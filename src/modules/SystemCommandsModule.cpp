@@ -32,6 +32,30 @@ int SystemCommandsModule::handleInputEvent(const InputEvent *event)
     case INPUT_BROKER_MSG_FN_SYMBOL_OFF:
         IF_SCREEN(screen->removeFunctionSymbol("Fn"));
         return 0;
+    case INPUT_BROKER_MSG_SYS_ON_SYMBOL_OFF:
+        IF_SCREEN(screen->removeFunctionSymbol("123"));
+        IF_SCREEN(screen->removeFunctionSymbol("abc"));
+        IF_SCREEN(screen->removeFunctionSymbol("ABC"));
+        //IF_SCREEN(screen->setFunctionSymbol("Fn"));
+        return 0;
+    case INPUT_BROKER_MSG_SYS_OFF_abc_SYMBOL_ON:
+        IF_SCREEN(screen->removeFunctionSymbol("123"));        
+        IF_SCREEN(screen->removeFunctionSymbol("ABC"));
+        IF_SCREEN(screen->setFunctionSymbol("abc"));
+        //IF_SCREEN(screen->removeFunctionSymbol("Fn"));
+        return 0;
+    case INPUT_BROKER_MSG_SYS_OFF_ABC_SYMBOL_ON:
+        IF_SCREEN(screen->removeFunctionSymbol("123"));
+        IF_SCREEN(screen->removeFunctionSymbol("abc"));
+        IF_SCREEN(screen->setFunctionSymbol("ABC"));
+        // IF_SCREEN(screen->setFunctionSymbol("Fn"));
+        return 0;
+    case INPUT_BROKER_MSG_SYS_OFF_123_SYMBOL_ON:
+        IF_SCREEN(screen->removeFunctionSymbol("abc"));
+        IF_SCREEN(screen->removeFunctionSymbol("ABC"));
+        IF_SCREEN(screen->setFunctionSymbol("123"));
+        // IF_SCREEN(screen->removeFunctionSymbol("Fn"));
+        return 0;
     // Brightness
     case INPUT_BROKER_MSG_BRIGHTNESS_UP:
         IF_SCREEN(screen->increaseBrightness());

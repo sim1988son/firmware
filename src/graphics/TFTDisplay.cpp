@@ -465,7 +465,11 @@ class LGFX : public lgfx::LGFX_Device
             auto cfg = _panel_instance.config(); // Gets a structure for display panel settings.
 
             cfg.pin_cs = ST7789_CS; // Pin number where CS is connected (-1 = disable)
+#ifdef HELTEC_VISION_MASTER_T190_KEY                                                        
+            cfg.pin_rst = ST7789_RESET; 
+#else            
             cfg.pin_rst = -1;       // Pin number where RST is connected  (-1 = disable)
+#endif       // Pin number where RST is connected  (-1 = disable)
             cfg.pin_busy = -1;      // Pin number where BUSY is connected (-1 = disable)
 
             // The following setting values ​​are general initial values ​​for each panel, so please comment out any
@@ -1182,7 +1186,7 @@ bool TFTDisplay::connect()
     ft6336u.begin();
     pinMode(SCREEN_TOUCH_INT, INPUT_PULLUP);
     attachInterrupt(digitalPinToInterrupt(SCREEN_TOUCH_INT), rak14014_tpIntHandle, FALLING);
-#elif defined(T_DECK) || defined(PICOMPUTER_S3) || defined(CHATTER_2)
+#elif defined(T_DECK) || defined(PICOMPUTER_S3) || defined(CHATTER_2) || defined(HELTEC_VISION_MASTER_T190_KEY)
     tft->setRotation(1); // T-Deck has the TFT in landscape
 #elif defined(T_WATCH_S3) || defined(SENSECAP_INDICATOR)
     tft->setRotation(2); // T-Watch S3 left-handed orientation

@@ -155,7 +155,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TDECK_KB_ADDR 0x55
 #define BBQ10_KB_ADDR 0x1F
 #define MPR121_KB_ADDR 0x5A
-
+#define PCF8574A_ADDR 0x20
 // -----------------------------------------------------------------------------
 // SENSOR
 // -----------------------------------------------------------------------------
@@ -223,7 +223,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // -----------------------------------------------------------------------------
 // IO Expander
 // -----------------------------------------------------------------------------
-#define TCA9535_ADDR 0x20
+#define TCA9535_ADDR 0x21
 #define TCA9555_ADDR 0x26
 
 // -----------------------------------------------------------------------------
