@@ -720,7 +720,7 @@ bool CannedMessageModule::handleFreeTextInput(const InputEvent *event)
     }
 
     // Backspace
-    if (event->inputEvent == INPUT_BROKER_BACK) {
+    if (event->inputEvent == INPUT_BROKER_BACK && this->freetext.length() > 0) {
         payload = 0x08;
         lastTouchMillis = millis();
         runOnce();
@@ -743,7 +743,8 @@ bool CannedMessageModule::handleFreeTextInput(const InputEvent *event)
     }
 
     // Cancel (dismiss freetext screen)
-    if (event->inputEvent == INPUT_BROKER_CANCEL || event->inputEvent == INPUT_BROKER_ALT_LONG) {
+    if (event->inputEvent == INPUT_BROKER_CANCEL || event->inputEvent == INPUT_BROKER_ALT_LONG ||
+        (event->inputEvent == INPUT_BROKER_BACK && this->freetext.length() == 0)) {
         runState = CANNED_MESSAGE_RUN_STATE_INACTIVE;
         freetext = "";
         cursor = 0;
@@ -993,6 +994,7 @@ int32_t CannedMessageModule::runOnce()
                         }
                         this->cursor--;
                     }
+                } else {
                 }
                 break;
             case INPUT_BROKER_MSG_TAB: // Tab key: handled by input handler
